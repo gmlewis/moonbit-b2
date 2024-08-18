@@ -1,0 +1,8 @@
+{
+  "import": [
+    "gmlewis/base64",
+    "gmlewis/spin-moonbit-sdk/common",
+    "gmlewis/spin-moonbit-sdk/interface/imports/wasi/http/types",
+    "gmlewis/spin-moonbit-sdk/util"
+  ]
+}
