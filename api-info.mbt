@@ -34,13 +34,13 @@ struct StorageAPI {
   ///
   /// EXAMPLE
   /// BUCKET_ID
-  bucket_id : String // `json:"bucketId"`
+  bucket_id : String? // `json:"bucketId"`
 
   /// When bucketId is set, and it is a valid bucket that has not been deleted, this field is set to the name of the bucket. It's possible that bucketId is set to a bucket that no longer exists, in which case this field will be null. It's also null when bucketId is null.
   ///
   /// EXAMPLE
   /// myBucketName
-  bucket_name : String // `json:"bucketName"`
+  bucket_name : String? // `json:"bucketName"`
 
   /// A list of strings, each one naming a capability the key has.
   ///
@@ -64,7 +64,7 @@ struct StorageAPI {
   ///
   /// EXAMPLE
   /// myFilePrefix
-  name_prefix : String // `json:"namePrefix"`
+  name_prefix : String? // `json:"namePrefix"`
 
   /// The recommended file part size.
   ///
@@ -84,16 +84,28 @@ fn StorageAPI::from_json(map : Map[String, Json]) -> StorageAPI!ClientError {
     {
       "absoluteMinimumPartSize": Number(absolute_minimum_part_size),
       "apiUrl": String(api_url),
-      "bucketId": String(bucket_id),
-      "bucketName": String(bucket_name),
+      "bucketId": bucket_id,
+      "bucketName": bucket_name,
       "capabilities": Array(capabilities_arr),
       "downloadUrl": String(download_url),
       "infoType": String(info_type),
-      "namePrefix": String(name_prefix),
+      "namePrefix": name_prefix,
       "recommendedPartSize": Number(recommended_part_size),
       "s3ApiUrl": String(s3apiurl),
     } => {
       let absolute_minimum_part_size = absolute_minimum_part_size.to_int()
+      let bucket_id = match bucket_id {
+        String(v) => Some(v)
+        _ => None
+      }
+      let bucket_name = match bucket_name {
+        String(v) => Some(v)
+        _ => None
+      }
+      let name_prefix = match name_prefix {
+        String(v) => Some(v)
+        _ => None
+      }
       let capabilities = Array::new(capacity=capabilities_arr.length())
       for s in capabilities_arr {
         match s {

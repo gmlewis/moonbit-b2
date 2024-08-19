@@ -7,7 +7,7 @@ struct Client {
   /// An authorization token to use with all calls, other than b2_authorize_account, that need an Authorization header. This authorization token is valid for at most 24 hours.
   authorization_token : String // `json:"authorizationToken"`
   /// Expiration timestamp for the application key.
-  application_key_expiration_timestamp : Int // `json:"applicationKeyExpirationTimestamp,omitempty"`
+  application_key_expiration_timestamp : Int? // `json:"applicationKeyExpirationTimestamp,omitempty"`
 
   /// This client is used to interact with this bucket.
   bucket_name : String
@@ -28,11 +28,13 @@ fn Client::from_json!(
       "accountId": String(account_id),
       "apiInfo": Object(api_info),
       "authorizationToken": String(authorization_token),
-      "applicationKeyExpirationTimestamp": Number(
-        application_key_expiration_timestamp
-      ),
+      "applicationKeyExpirationTimestamp": application_key_expiration_timestamp,
     } => {
-      let application_key_expiration_timestamp = application_key_expiration_timestamp.to_int()
+      let application_key_expiration_timestamp = match
+        application_key_expiration_timestamp {
+        Number(v) => Some(v.to_int())
+        _ => None
+      }
       let api_info = APIInfo::from_json!(api_info)
       {
         account_id,
@@ -43,40 +45,6 @@ fn Client::from_json!(
       }
     }
     _ => raise ClientError("unable to parse Client: \{json}")
-  }
-}
-
-test "Client::from_json - invalid applicationKeyExpirationTimestamp" {
-  let invalid_expiration_json =
-    #|{
-    #|  "accountId": "12345",
-    #|  "apiInfo": {
-    #|    "storageApi": {
-    #|      "absoluteMinimumPartSize": 5000000,
-    #|      "apiUrl": "https://apiNNN.backblazeb2.com",
-    #|      "bucketId": "BUCKET_ID",
-    #|      "bucketName": "myBucketName",
-    #|      "capabilities": ["deleteFiles", "readFiles"],
-    #|      "downloadUrl": "https://f001.backblazeb2.com",
-    #|      "infoType": "storageApi",
-    #|      "namePrefix": "myFilePrefix",
-    #|      "recommendedPartSize": 100000000,
-    #|      "s3ApiUrl": "https://s3.us-west-NNN.backblazeb2.com"
-    #|    }
-    #|  },
-    #|  "authorizationToken": "auth_token",
-    #|  "applicationKeyExpirationTimestamp": "invalidTimestamp"
-    #|}
-  try {
-    let client = Client::from_json!(invalid_expiration_json, "some-bucket")
-    raise ClientError("expected failure, but got: \{client}")
-  } catch {
-    ClientError(e) =>
-      assert_eq!(
-        e,
-        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000.0), "apiUrl": String("https://apiNNN.backblazeb2.com"), "bucketId": String("BUCKET_ID"), "bucketName": String("myBucketName"), "capabilities": Array([String("deleteFiles"), String("readFiles")]), "downloadUrl": String("https://f001.backblazeb2.com"), "infoType": String("storageApi"), "namePrefix": String("myFilePrefix"), "recommendedPartSize": Number(1.0e8), "s3ApiUrl": String("https://s3.us-west-NNN.backblazeb2.com")})}), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": String("invalidTimestamp")})
-        ,
-      )
   }
 }
 
@@ -190,7 +158,7 @@ test "Client::from_json - invalid JSON input" {
   }
 }
 
-test "Client::from_json - valid JSON input" {
+test "Client::from_json - valid JSON input with nulls" {
   let valid_json =
     #|{
     #|  "accountId": "12345",
@@ -198,23 +166,23 @@ test "Client::from_json - valid JSON input" {
     #|    "storageApi": {
     #|      "absoluteMinimumPartSize": 5000000,
     #|      "apiUrl": "https://apiNNN.backblazeb2.com",
-    #|      "bucketId": "BUCKET_ID",
-    #|      "bucketName": "myBucketName",
+    #|      "bucketId": null,
+    #|      "bucketName": null,
     #|      "capabilities": ["deleteFiles", "readFiles"],
     #|      "downloadUrl": "https://f001.backblazeb2.com",
     #|      "infoType": "storageApi",
-    #|      "namePrefix": "myFilePrefix",
+    #|      "namePrefix": null,
     #|      "recommendedPartSize": 100000000,
     #|      "s3ApiUrl": "https://s3.us-west-NNN.backblazeb2.com"
     #|    }
     #|  },
     #|  "authorizationToken": "auth_token",
-    #|  "applicationKeyExpirationTimestamp": 1672531200
+    #|  "applicationKeyExpirationTimestamp": null
     #|}
   inspect!(
     Client::from_json!(valid_json, "some-bucket"),
     content=
-      #|{account_id: "12345", api_info: {storage_api: {absolute_minimum_part_size: 5000000, api_url: "https://apiNNN.backblazeb2.com", bucket_id: "BUCKET_ID", bucket_name: "myBucketName", capabilities: ["deleteFiles", "readFiles"], download_url: "https://f001.backblazeb2.com", info_type: "storageApi", name_prefix: "myFilePrefix", recommended_part_size: 100000000, s3apiurl: "https://s3.us-west-NNN.backblazeb2.com"}}, authorization_token: "auth_token", application_key_expiration_timestamp: 1672531200, bucket_name: "some-bucket"}
+      #|{account_id: "12345", api_info: {storage_api: {absolute_minimum_part_size: 5000000, api_url: "https://apiNNN.backblazeb2.com", bucket_id: None, bucket_name: None, capabilities: ["deleteFiles", "readFiles"], download_url: "https://f001.backblazeb2.com", info_type: "storageApi", name_prefix: None, recommended_part_size: 100000000, s3apiurl: "https://s3.us-west-NNN.backblazeb2.com"}}, authorization_token: "auth_token", application_key_expiration_timestamp: None, bucket_name: "some-bucket"}
     ,
   )
 }
