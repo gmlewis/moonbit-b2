@@ -1,6 +1,6 @@
 let api_base_url = "https://api.backblazeb2.com"
 
-type! ClientError String
+pub type! ClientError String
 
 /// `Client::new` returns a new client to communicate with the b2 (Backblaze) API
 /// for the provided `bucket_name`.
