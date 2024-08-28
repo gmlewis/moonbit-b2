@@ -63,7 +63,7 @@ test "Client::from_json - invalid apiInfo structure" {
     ClientError(e) =>
       assert_eq!(
         e,
-        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": String("invalidApiInfo"), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": Number(1.6725312e9)})
+        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": String("invalidApiInfo"), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": Number(1672531200)})
         ,
       )
   }
@@ -88,7 +88,7 @@ test "Client::from_json - partial valid JSON input" {
     ClientError(e) =>
       assert_eq!(
         e,
-        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000.0), "apiUrl": String("https://apiNNN.backblazeb2.com")})}), "authorizationToken": String("auth_token")})
+        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000), "apiUrl": String("https://apiNNN.backblazeb2.com")})}), "authorizationToken": String("auth_token")})
         ,
       )
   }
@@ -107,7 +107,7 @@ test "Client::from_json - random JSON input" {
     ClientError(e) =>
       assert_eq!(
         e,
-        #|unable to parse Client: Object({"randomField": String("randomValue"), "anotherRandomField": Number(12345.0)})
+        #|unable to parse Client: Object({"randomField": String("randomValue"), "anotherRandomField": Number(12345)})
         ,
       )
   }
