@@ -10,9 +10,9 @@ The code has been updated to support compiler:
 
 ```bash
 $ moon version --all
-moon 0.1.20240827 (f5f13e7 2024-08-27) ~/.moon/bin/moon
-moonc v0.1.20240827+848d2bb76 ~/.moon/bin/moonc
-moonrun 0.1.20240822 (efda7a5 2024-08-22) ~/.moon/bin/moonrun
+moon 0.1.20240902 (a1bf66a 2024-09-02) ~/.moon/bin/moon
+moonc v0.1.20240902+47bcb87c9 ~/.moon/bin/moonc
+moonrun 0.1.20240902 (a1bf66a 2024-09-02) ~/.moon/bin/moonrun
 ```
 
 Use `moonup` to manage `moon` compiler versions:
