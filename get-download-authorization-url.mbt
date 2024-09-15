@@ -16,14 +16,8 @@ pub fn get_download_authorization_url(
   if not(download_url.starts_with("https://")) {
     raise ClientError("url '\{download_url}' does not start with https://")
   }
-  let bucket_id = match self.api_info.storage_api.bucket_id {
-    Some(v) => v
-    _ => raise ClientError("missing bucket_id")
-  }
-  let bucket_name = match self.api_info.storage_api.bucket_name {
-    Some(v) => v
-    _ => raise ClientError("missing bucket_name")
-  }
+  let bucket_id = self.bucket_id
+  let bucket_name = self.bucket_name
   //
   let url = "\{api_url}/b2api/v3/b2_get_download_authorization?bucketId=\{bucket_id}&fileNamePrefix=\{file_name_prefix}&validDurationInSeconds=\{valid_duration_in_seconds}"
   let fields = [
