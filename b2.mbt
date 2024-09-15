@@ -7,7 +7,8 @@ pub type! ClientError String derive(Show)
 pub fn Client::new(
   key_id : String,
   key_secret : String,
-  bucket_name : String
+  bucket_name : String,
+  ~debug : Bool = false
 ) -> Client!ClientError {
   let input = @base64.str2bytes("\{key_id}:\{key_secret}")
   let basic_auth = @base64.std_encode2str(FixedArray::from_iter(input.iter()))
@@ -20,6 +21,9 @@ pub fn Client::new(
   let body = match @util.send_request(req) {
     Ok(body) => @base64.bytes2str(body)
     Err(e) => raise ClientError("request failed with error code: \{e}")
+  }
+  if debug {
+    @log.info("b2.Client::new: body=\{body}")
   }
 
   //
