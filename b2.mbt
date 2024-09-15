@@ -3,10 +3,11 @@ let api_base_url = "https://api.backblazeb2.com"
 pub type! ClientError String derive(Show)
 
 /// `Client::new` returns a new client to communicate with the b2 (Backblaze) API
-/// for the provided `bucket_name`.
+/// for the provided `bucket_id` and `bucket_name`.
 pub fn Client::new(
   key_id : String,
   key_secret : String,
+  bucket_id : String,
   bucket_name : String,
   ~debug : Bool = false
 ) -> Client!ClientError {
@@ -27,5 +28,5 @@ pub fn Client::new(
   }
 
   //
-  Client::from_json!(body, bucket_name)
+  Client::from_json!(body, bucket_id, bucket_name)
 }
