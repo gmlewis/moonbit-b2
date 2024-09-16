@@ -17,7 +17,6 @@ pub fn get_download_authorization_url(
     raise ClientError("url '\{download_url}' does not start with https://")
   }
   let bucket_id = self.bucket_id
-  let bucket_name = self.bucket_name
   //
   let url = "\{api_url}/b2api/v3/b2_get_download_authorization?bucketId=\{bucket_id}&fileNamePrefix=\{file_name_prefix}&validDurationInSeconds=\{valid_duration_in_seconds}"
   let fields = [
@@ -29,15 +28,36 @@ pub fn get_download_authorization_url(
     Ok(body) => @base64.bytes2str(body)
     Err(e) => raise ClientError(e.to_string())
   }
+  gen_url!(body, download_url, self.bucket_name, file_name_prefix)
+}
+
+fn gen_url(
+  body : String,
+  download_url : String,
+  bucket_name : String,
+  file_name_prefix : String
+) -> String!ClientError {
   let json = match @json.parse?(body) {
     Ok(json) => json
     Err(e) => raise ClientError(e.to_string())
   }
   let authorization_token = match json {
-    Object({ "authorizationToken": token }) => token
+    Object({ "authorizationToken": String(token) }) => token
     _ => raise ClientError("missing authorizationToken in response: \{body}")
   }
   //
   let url = "\{download_url}/file/\{bucket_name}/\{file_name_prefix}?Authorization=\{authorization_token}"
   url
+}
+
+test "gen_url generates valid URL" {
+  let body =
+    #|{"authorizationToken":"a-b-c-1-2-3"}
+  let download_url = "https://f123.example.com"
+  let bucket_name = "some-bucket-name"
+  let file_name_prefix = "some-file-name-prefix"
+  let got = gen_url!(body, download_url, bucket_name, file_name_prefix)
+  let want =
+    #|https://f123.example.com/file/some-bucket-name/some-file-name-prefix?Authorization=a-b-c-1-2-3
+  assert_eq!(got, want)
 }
