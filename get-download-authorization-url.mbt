@@ -5,8 +5,8 @@
 pub fn get_download_authorization_url(
   self : Client,
   file_name_prefix : String,
-  ~valid_duration_in_seconds : Int = 604800, // maximum = 1 week
-  ~debug : Bool = false
+  valid_duration_in_seconds~ : Int = 604800, // maximum = 1 week
+  debug~ : Bool = false
 ) -> String!ClientError {
   let api_url = self.api_info.storage_api.api_url
   if not(api_url.starts_with("https://")) {
@@ -23,8 +23,8 @@ pub fn get_download_authorization_url(
     ("Content-Type", b"application/json"),
     ("Authorization", @base64.str2bytes(self.authorization_token)),
   ]
-  let req = @util.new_request(@types.Get, url, ~fields)
-  let body = match @util.send_request(req, ~debug) {
+  let req = @util.new_request(@types.Get, url, fields~)
+  let body = match @util.send_request(req, debug~) {
     Ok(body) => @base64.bytes2str(body)
     Err(e) => raise ClientError(e.to_string())
   }

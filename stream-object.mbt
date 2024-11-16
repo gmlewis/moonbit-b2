@@ -5,8 +5,8 @@ pub fn stream_object(
   self : Client,
   filename : String,
   response_out : @types.ResponseOutparam,
-  ~hash : @common.HashFunc?,
-  ~debug : Bool = false
+  hash~ : @common.HashFunc?,
+  debug~ : Bool = false
 ) -> String!ClientError {
   let download_url = self.api_info.storage_api.download_url
   if not(download_url.starts_with("https://")) {
@@ -19,9 +19,9 @@ pub fn stream_object(
     ("Content-Type", b"application/octet-stream"),
     ("Authorization", @base64.str2bytes(self.authorization_token)),
   ]
-  let req = @util.new_request(@types.Get, api_url, ~fields)
+  let req = @util.new_request(@types.Get, api_url, fields~)
   //
-  match @util.stream(req, response_out, hash, ~debug) {
+  match @util.stream(req, response_out, hash, debug~) {
     Ok((_byte_count, hash)) => hash
     Err(e) => raise ClientError(e.to_string())
   }
