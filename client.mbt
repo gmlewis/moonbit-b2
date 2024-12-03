@@ -1,4 +1,4 @@
-/// `Client` represents an authorized b2 client.
+///| `Client` represents an authorized b2 client.
 struct Client {
   /// The identifier for the account.
   account_id : String // `json:"accountId"`
@@ -14,6 +14,7 @@ struct Client {
   bucket_name : String
 } derive(Show)
 
+///|
 fn Client::from_json!(
   body : String,
   bucket_id : String,
