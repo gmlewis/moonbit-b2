@@ -5,7 +5,7 @@ pub fn stream_object(
   self : Client,
   filename : String,
   response_out : @types.ResponseOutparam,
-  hash~ : @common.HashFunc?,
+  hash~ : &@common.HashFunc?,
   debug~ : Bool = false
 ) -> String!ClientError {
   let download_url = self.api_info.storage_api.download_url
