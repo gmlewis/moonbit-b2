@@ -51,6 +51,7 @@ fn gen_url(
   url
 }
 
+///|
 test "gen_url generates valid URL" {
   let body =
     #|{"authorizationToken":"a-b-c-1-2-3"}

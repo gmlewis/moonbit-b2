@@ -52,6 +52,7 @@ fn Client::from_json!(
   }
 }
 
+///|
 test "Client::from_json - invalid apiInfo structure" {
   let invalid_apiInfo_json =
     #|{
@@ -75,6 +76,7 @@ test "Client::from_json - invalid apiInfo structure" {
   }
 }
 
+///|
 test "Client::from_json - partial valid JSON input" {
   let partial_valid_json =
     #|{
@@ -102,6 +104,7 @@ test "Client::from_json - partial valid JSON input" {
   }
 }
 
+///|
 test "Client::from_json - random JSON input" {
   let random_json =
     #|{
@@ -123,6 +126,7 @@ test "Client::from_json - random JSON input" {
   }
 }
 
+///|
 test "Client::from_json - empty JSON input" {
   let empty_json = "{}"
   try {
@@ -140,6 +144,7 @@ test "Client::from_json - empty JSON input" {
   }
 }
 
+///|
 test "Client::from_json - missing required fields" {
   let missing_fields_json =
     #|{
@@ -162,6 +167,7 @@ test "Client::from_json - missing required fields" {
   }
 }
 
+///|
 test "Client::from_json - invalid JSON input" {
   let invalid_json = "invalid JSON string"
   try {
@@ -174,6 +180,7 @@ test "Client::from_json - invalid JSON input" {
   }
 }
 
+///|
 test "Client::from_json - valid JSON input with nulls" {
   let valid_json =
     #|{

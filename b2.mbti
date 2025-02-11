@@ -1,0 +1,30 @@
+package gmlewis/b2
+
+alias @gmlewis/spin-moonbit-sdk/common as @common
+alias @gmlewis/spin-moonbit-sdk/interface/imports/wasi/http/types as @types
+
+// Values
+
+// Types and methods
+type APIInfo
+impl Show for APIInfo
+
+type Client
+impl Client {
+  consume_object(Self, String, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
+  get_download_authorization_url(Self, String, valid_duration_in_seconds~ : Int = .., debug~ : Bool = ..) -> String!ClientError
+  new(String, String, String, String, debug~ : Bool = ..) -> Self!ClientError
+  stream_object(Self, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
+}
+impl Show for Client
+
+pub(all) type! ClientError String
+impl Show for ClientError
+
+type StorageAPI
+impl Show for StorageAPI
+
+// Type aliases
+
+// Traits
+
