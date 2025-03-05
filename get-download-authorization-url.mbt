@@ -43,7 +43,7 @@ fn gen_url(
     Err(e) => raise ClientError(e.to_string())
   }
   let authorization_token = match json {
-    Object({ "authorizationToken": String(token) }) => token
+    Object({ "authorizationToken": String(token), .. }) => token
     _ => raise ClientError("missing authorizationToken in response: \{body}")
   }
   //

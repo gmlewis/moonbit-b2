@@ -6,9 +6,6 @@ alias @gmlewis/spin-moonbit-sdk/interface/imports/wasi/http/types as @types
 // Values
 
 // Types and methods
-type APIInfo
-impl Show for APIInfo
-
 type Client
 impl Client {
   consume_object(Self, String, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
@@ -20,9 +17,6 @@ impl Show for Client
 
 pub(all) type! ClientError String
 impl Show for ClientError
-
-type StorageAPI
-impl Show for StorageAPI
 
 // Type aliases
 

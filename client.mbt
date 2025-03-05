@@ -32,6 +32,7 @@ fn Client::from_json!(
       "apiInfo": Object(api_info),
       "authorizationToken": String(authorization_token),
       "applicationKeyExpirationTimestamp": application_key_expiration_timestamp,
+      ..
     } => {
       let application_key_expiration_timestamp = match
         application_key_expiration_timestamp {
