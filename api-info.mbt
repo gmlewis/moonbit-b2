@@ -1,4 +1,5 @@
-///| `APIInfo` represents Backblaze B2 Native API info.
+///|
+/// `APIInfo` represents Backblaze B2 Native API info.
 /// It is a data structure that groups the information you need by API suite.
 priv struct APIInfo {
   // GroupsAPI - not needed - used for the Partner API.
@@ -17,7 +18,8 @@ fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo!ClientError {
   }
 }
 
-///| `StorageAPI` represents Backblaze B2 Native Storage API info.
+///|
+/// `StorageAPI` represents Backblaze B2 Native Storage API info.
 priv struct StorageAPI {
   /// The smallest possible size of a part of a large file (except the last one). This is smaller than the recommendedPartSize. If you use it, you may find that it takes longer overall to upload a large file.
   ///

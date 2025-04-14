@@ -1,4 +1,5 @@
-///| `Client` represents an authorized b2 client.
+///|
+/// `Client` represents an authorized b2 client.
 struct Client {
   /// The identifier for the account.
   account_id : String // `json:"accountId"`

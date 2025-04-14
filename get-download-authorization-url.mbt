@@ -1,4 +1,5 @@
-///| `get_download_authorization_url` returns a URL that can be used in an
+///|
+/// `get_download_authorization_url` returns a URL that can be used in an
 /// https GET call to download any files in a bucket with the given `file_name_prefix`.
 /// Note that if `file_name_prefix` needs to be escaped for suitability within a query parameter,
 /// you must do that first before calling this function.
