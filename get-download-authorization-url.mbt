@@ -10,11 +10,11 @@ pub fn get_download_authorization_url(
   debug~ : Bool = false
 ) -> String!ClientError {
   let api_url = self.api_info.storage_api.api_url
-  if not(api_url.starts_with("https://")) {
+  if not(api_url.has_prefix("https://")) {
     raise ClientError("url '\{api_url}' does not start with https://")
   }
   let download_url = self.api_info.storage_api.download_url
-  if not(download_url.starts_with("https://")) {
+  if not(download_url.has_prefix("https://")) {
     raise ClientError("url '\{download_url}' does not start with https://")
   }
   let bucket_id = self.bucket_id
