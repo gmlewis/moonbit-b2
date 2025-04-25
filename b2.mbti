@@ -2,7 +2,7 @@ package "gmlewis/b2"
 
 import(
   "gmlewis/spin-moonbit-sdk/common"
-  "gmlewis/spin-moonbit-sdk/interface/imports/wasi/http/types"
+  "gmlewis/spin-moonbit-sdk/interface/wasi/http/types"
 )
 
 // Values
