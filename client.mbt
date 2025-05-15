@@ -9,7 +9,6 @@ struct Client {
   authorization_token : String // `json:"authorizationToken"`
   /// Expiration timestamp for the application key.
   application_key_expiration_timestamp : Int? // `json:"applicationKeyExpirationTimestamp,omitempty"`
-
   /// This client is used to interact with this bucket.
   bucket_id : String
   bucket_name : String

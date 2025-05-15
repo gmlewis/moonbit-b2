@@ -26,55 +26,46 @@ priv struct StorageAPI {
   /// EXAMPLE
   /// 5000000
   absolute_minimum_part_size : Int // `json:"absoluteMinimumPartSize"`
-
   /// The base URL to use for all API calls except for uploading and downloading files.
   ///
   /// EXAMPLE
   /// https://apiNNN.backblazeb2.com
   api_url : String // `json:"apiUrl"`
-
   /// When present,access is restricted to one bucket.
   ///
   /// EXAMPLE
   /// BUCKET_ID
   bucket_id : String? // `json:"bucketId"`
-
   /// When bucketId is set, and it is a valid bucket that has not been deleted, this field is set to the name of the bucket. It's possible that bucketId is set to a bucket that no longer exists, in which case this field will be null. It's also null when bucketId is null.
   ///
   /// EXAMPLE
   /// myBucketName
   bucket_name : String? // `json:"bucketName"`
-
   /// A list of strings, each one naming a capability the key has.
   ///
   /// VALID VALUES
   /// [ "deleteFiles", "deleteKeys", "readBucketEncryption", "writeKeys", "writeBuckets", "writeBucketNotifications", "writeBucketReplications", "readBucketNotifications", "readBucketReplications", "deleteBuckets", "readBuckets", "bypassGovernance", "readFileLegalHolds", "readFiles", "listAllBucketNames", "readBucketRetentions", "writeBucketRetentions", "writeFileLegalHolds", "shareFiles", "writeFiles", "listKeys", "listBuckets", "listFiles", "writeFileRetentions", "writeBucketEncryption", "readFileRetentions" ]
   capabilities : Array[String] // `json:"capabilities"`
-
   /// The base URL to use for downloading files.
   ///
   /// EXAMPLE
   /// https://f001.backblazeb2.com
   download_url : String // `json:"downloadUrl"`
-
   /// The API type that the information in the object corresponds to.
   ///
   /// EXAMPLE
   /// storageApi
   info_type : String // `json:"infoType"`
-
   /// When present, access is restricted to files whose names start with the prefix
   ///
   /// EXAMPLE
   /// myFilePrefix
   name_prefix : String? // `json:"namePrefix"`
-
   /// The recommended file part size.
   ///
   /// EXAMPLE
   /// 100000000
   recommended_part_size : Int // `json:"recommendedPartSize"`
-
   /// The base URL to use for all API calls using the S3 compatible API.
   ///
   /// EXAMPLE

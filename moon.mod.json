@@ -1,9 +1,9 @@
 {
   "name": "gmlewis/b2",
-  "version": "0.34.10",
+  "version": "0.34.11",
   "deps": {
-    "gmlewis/base64": "0.14.4",
-    "gmlewis/spin-moonbit-sdk": "0.53.2"
+    "gmlewis/base64": "0.14.5",
+    "gmlewis/spin-moonbit-sdk": "0.53.3"
   },
   "readme": "README.md",
   "repository": "https://github.com/gmlewis/moonbit-b2",
