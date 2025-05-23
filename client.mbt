@@ -20,9 +20,7 @@ fn Client::from_json!(
   bucket_id : String,
   bucket_name : String
 ) -> Client!ClientError {
-  let json = try {
-    @json.parse!(body)
-  } catch {
+  let json = try @json.parse!(body) catch {
     e => raise ClientError(e.to_string())
   }
   //
