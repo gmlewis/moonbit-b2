@@ -14,12 +14,10 @@ fn stream_object(Client, String, @types.ResponseOutparam, hash~ : &@common.HashF
 
 // Types and methods
 type Client
-impl Client {
-  consume_object(Self, String, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
-  get_download_authorization_url(Self, String, valid_duration_in_seconds~ : Int = .., debug~ : Bool = ..) -> String!ClientError
-  new(String, String, String, String, debug~ : Bool = ..) -> Self!ClientError
-  stream_object(Self, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
-}
+fn Client::consume_object(Self, String, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
+fn Client::get_download_authorization_url(Self, String, valid_duration_in_seconds~ : Int = .., debug~ : Bool = ..) -> String!ClientError
+fn Client::new(String, String, String, String, debug~ : Bool = ..) -> Self!ClientError
+fn Client::stream_object(Self, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String!ClientError
 impl Show for Client
 
 pub(all) type! ClientError String
