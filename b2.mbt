@@ -2,7 +2,7 @@
 let api_base_url = "https://api.backblazeb2.com"
 
 ///|
-pub(all) type! ClientError String derive(Show)
+pub(all) suberror ClientError String derive(Show)
 
 ///|
 /// `Client::new` returns a new client to communicate with the b2 (Backblaze) API
@@ -13,7 +13,7 @@ pub fn Client::new(
   bucket_id : String,
   bucket_name : String,
   debug~ : Bool = false
-) -> Client!ClientError {
+) -> Client raise ClientError {
   let input = @base64.str2bytes("\{key_id}:\{key_secret}")
   let basic_auth = @base64.std_encode2str(FixedArray::from_iter(input.iter()))
   let url = "\{api_base_url}/b2api/v3/b2_authorize_account"
@@ -31,5 +31,5 @@ pub fn Client::new(
   }
 
   //
-  Client::from_json!(body, bucket_id, bucket_name)
+  Client::from_json(body, bucket_id, bucket_name)
 }

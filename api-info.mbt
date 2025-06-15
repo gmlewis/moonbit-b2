@@ -8,10 +8,10 @@ priv struct APIInfo {
 } derive(Show)
 
 ///|
-fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo!ClientError {
+fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo raise ClientError {
   match map {
     { "storageApi": Object(storage_api), .. } => {
-      let storage_api = StorageAPI::from_json!(storage_api)
+      let storage_api = StorageAPI::from_json(storage_api)
       { storage_api, }
     }
     _ => raise ClientError("unable to parse APIInfo: \{map}")
@@ -74,7 +74,9 @@ priv struct StorageAPI {
 } derive(Show)
 
 ///|
-fn StorageAPI::from_json(map : Map[String, Json]) -> StorageAPI!ClientError {
+fn StorageAPI::from_json(
+  map : Map[String, Json]
+) -> StorageAPI raise ClientError {
   match map {
     {
       "absoluteMinimumPartSize": Number(absolute_minimum_part_size),

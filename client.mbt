@@ -15,14 +15,12 @@ struct Client {
 } derive(Show)
 
 ///|
-fn Client::from_json!(
+fn Client::from_json(
   body : String,
   bucket_id : String,
   bucket_name : String
-) -> Client!ClientError {
-  let json = try @json.parse!(body) catch {
-    e => raise ClientError(e.to_string())
-  }
+) -> Client raise ClientError {
+  let json = @json.parse(body) catch { e => raise ClientError(e.to_string()) }
   //
   match json {
     {
@@ -37,7 +35,7 @@ fn Client::from_json!(
         Number(v) => Some(v.to_int())
         _ => None
       }
-      let api_info = APIInfo::from_json!(api_info)
+      let api_info = APIInfo::from_json(api_info)
       {
         account_id,
         api_info,
@@ -61,13 +59,13 @@ test "Client::from_json - invalid apiInfo structure" {
     #|  "applicationKeyExpirationTimestamp": 1672531200
     #|}
   try {
-    let client = Client::from_json!(
+    let client = Client::from_json(
       invalid_apiInfo_json, "some-bucket-id", "some-bucket-name",
     )
     raise ClientError("expected failure, but got: \{client}")
   } catch {
     ClientError(e) =>
-      assert_eq!(
+      assert_eq(
         e,
         #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": String("invalidApiInfo"), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": Number(1672531200)})
         ,
@@ -89,13 +87,13 @@ test "Client::from_json - partial valid JSON input" {
     #|  "authorizationToken": "auth_token"
     #|}
   try {
-    let client = Client::from_json!(
+    let client = Client::from_json(
       partial_valid_json, "some-bucket-id", "some-bucket-name",
     )
     raise ClientError("expected failure, but got: \{client}")
   } catch {
     ClientError(e) =>
-      assert_eq!(
+      assert_eq(
         e,
         #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000), "apiUrl": String("https://apiNNN.backblazeb2.com")})}), "authorizationToken": String("auth_token")})
         ,
@@ -111,13 +109,13 @@ test "Client::from_json - random JSON input" {
     #|  "anotherRandomField": 12345
     #|}
   try {
-    let client = Client::from_json!(
+    let client = Client::from_json(
       random_json, "some-bucket-id", "some-bucket-name",
     )
     raise ClientError("expected failure, but got: \{client}")
   } catch {
     ClientError(e) =>
-      assert_eq!(
+      assert_eq(
         e,
         #|unable to parse Client: Object({"randomField": String("randomValue"), "anotherRandomField": Number(12345)})
         ,
@@ -129,13 +127,13 @@ test "Client::from_json - random JSON input" {
 test "Client::from_json - empty JSON input" {
   let empty_json = "{}"
   try {
-    let client = Client::from_json!(
+    let client = Client::from_json(
       empty_json, "some-bucket-id", "some-bucket-name",
     )
     raise ClientError("expected failure, but got: \{client}")
   } catch {
     ClientError(e) =>
-      assert_eq!(
+      assert_eq(
         e,
         #|unable to parse Client: Object({})
         ,
@@ -152,13 +150,13 @@ test "Client::from_json - missing required fields" {
     #|  "authorizationToken": "auth_token"
     #|}
   try {
-    let client = Client::from_json!(
+    let client = Client::from_json(
       missing_fields_json, "some-bucket-id", "some-bucket-name",
     )
     raise ClientError("expected failure, but got: \{client}")
   } catch {
     ClientError(e) =>
-      assert_eq!(
+      assert_eq(
         e,
         #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({}), "authorizationToken": String("auth_token")})
         ,
@@ -170,12 +168,12 @@ test "Client::from_json - missing required fields" {
 test "Client::from_json - invalid JSON input" {
   let invalid_json = "invalid JSON string"
   try {
-    let client = Client::from_json!(
+    let client = Client::from_json(
       invalid_json, "some-bucket-id", "some-bucket-name",
     )
     raise ClientError("expected failure, but got: \{client}")
   } catch {
-    ClientError(e) => assert_eq!(e, "Invalid character 'i' at line 1, column 0")
+    ClientError(e) => assert_eq(e, "Invalid character 'i' at line 1, column 0")
   }
 }
 
@@ -201,8 +199,8 @@ test "Client::from_json - valid JSON input with nulls" {
     #|  "authorizationToken": "auth_token",
     #|  "applicationKeyExpirationTimestamp": null
     #|}
-  inspect!(
-    Client::from_json!(valid_json, "some-bucket-id", "some-bucket-name"),
+  inspect(
+    Client::from_json(valid_json, "some-bucket-id", "some-bucket-name"),
     content=
       #|{account_id: "12345", api_info: {storage_api: {absolute_minimum_part_size: 5000000, api_url: "https://apiNNN.backblazeb2.com", bucket_id: None, bucket_name: None, capabilities: ["deleteFiles", "readFiles"], download_url: "https://f001.backblazeb2.com", info_type: "storageApi", name_prefix: None, recommended_part_size: 100000000, s3apiurl: "https://s3.us-west-NNN.backblazeb2.com"}}, authorization_token: "auth_token", application_key_expiration_timestamp: None, bucket_id: "some-bucket-id", bucket_name: "some-bucket-name"}
     ,

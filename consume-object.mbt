@@ -6,7 +6,7 @@ pub fn consume_object(
   filename : String,
   hash~ : &@common.HashFunc?,
   debug~ : Bool = false
-) -> String!ClientError {
+) -> String raise ClientError {
   let download_url = self.api_info.storage_api.download_url
   if not(download_url.has_prefix("https://")) {
     raise ClientError("url '\{download_url}' does not start with https://")

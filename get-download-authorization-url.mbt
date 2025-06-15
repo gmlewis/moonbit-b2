@@ -8,7 +8,7 @@ pub fn get_download_authorization_url(
   file_name_prefix : String,
   valid_duration_in_seconds~ : Int = 604800, // maximum = 1 week
   debug~ : Bool = false
-) -> String!ClientError {
+) -> String raise ClientError {
   let api_url = self.api_info.storage_api.api_url
   if not(api_url.has_prefix("https://")) {
     raise ClientError("url '\{api_url}' does not start with https://")
@@ -29,7 +29,7 @@ pub fn get_download_authorization_url(
     Ok(body) => @base64.bytes2str(body)
     Err(e) => raise ClientError(e.to_string())
   }
-  gen_url!(body, download_url, self.bucket_name, file_name_prefix)
+  gen_url(body, download_url, self.bucket_name, file_name_prefix)
 }
 
 ///|
@@ -38,8 +38,9 @@ fn gen_url(
   download_url : String,
   bucket_name : String,
   file_name_prefix : String
-) -> String!ClientError {
-  let json = match @json.parse?(body) {
+) -> String raise ClientError {
+  let json = try? @json.parse(body)
+  let json = match json {
     Ok(json) => json
     Err(e) => raise ClientError(e.to_string())
   }
@@ -59,8 +60,8 @@ test "gen_url generates valid URL" {
   let download_url = "https://f123.example.com"
   let bucket_name = "some-bucket-name"
   let file_name_prefix = "some-file-name-prefix"
-  let got = gen_url!(body, download_url, bucket_name, file_name_prefix)
+  let got = gen_url(body, download_url, bucket_name, file_name_prefix)
   let want =
     #|https://f123.example.com/file/some-bucket-name/some-file-name-prefix?Authorization=a-b-c-1-2-3
-  assert_eq!(got, want)
+  assert_eq(got, want)
 }
