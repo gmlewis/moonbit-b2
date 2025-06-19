@@ -6,11 +6,6 @@ import(
 )
 
 // Values
-fn consume_object(Client, String, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String raise ClientError
-
-fn get_download_authorization_url(Client, String, valid_duration_in_seconds~ : Int = .., debug~ : Bool = ..) -> String raise ClientError
-
-fn stream_object(Client, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String raise ClientError
 
 // Types and methods
 type Client
