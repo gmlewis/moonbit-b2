@@ -67,8 +67,9 @@ test "Client::from_json - invalid apiInfo structure" {
     ClientError(e) =>
       assert_eq(
         e,
-        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": String("invalidApiInfo"), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": Number(1672531200)})
-        ,
+        (
+          #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": String("invalidApiInfo"), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": Number(1672531200)})
+        ),
       )
   }
 }
@@ -95,8 +96,9 @@ test "Client::from_json - partial valid JSON input" {
     ClientError(e) =>
       assert_eq(
         e,
-        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000), "apiUrl": String("https://apiNNN.backblazeb2.com")})}), "authorizationToken": String("auth_token")})
-        ,
+        (
+          #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000), "apiUrl": String("https://apiNNN.backblazeb2.com")})}), "authorizationToken": String("auth_token")})
+        ),
       )
   }
 }
@@ -117,8 +119,9 @@ test "Client::from_json - random JSON input" {
     ClientError(e) =>
       assert_eq(
         e,
-        #|unable to parse Client: Object({"randomField": String("randomValue"), "anotherRandomField": Number(12345)})
-        ,
+        (
+          #|unable to parse Client: Object({"randomField": String("randomValue"), "anotherRandomField": Number(12345)})
+        ),
       )
   }
 }
@@ -135,8 +138,9 @@ test "Client::from_json - empty JSON input" {
     ClientError(e) =>
       assert_eq(
         e,
-        #|unable to parse Client: Object({})
-        ,
+        (
+          #|unable to parse Client: Object({})
+        ),
       )
   }
 }
@@ -158,8 +162,9 @@ test "Client::from_json - missing required fields" {
     ClientError(e) =>
       assert_eq(
         e,
-        #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({}), "authorizationToken": String("auth_token")})
-        ,
+        (
+          #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({}), "authorizationToken": String("auth_token")})
+        ),
       )
   }
 }
@@ -201,8 +206,8 @@ test "Client::from_json - valid JSON input with nulls" {
     #|}
   inspect(
     Client::from_json(valid_json, "some-bucket-id", "some-bucket-name"),
-    content=
+    content=(
       #|{account_id: "12345", api_info: {storage_api: {absolute_minimum_part_size: 5000000, api_url: "https://apiNNN.backblazeb2.com", bucket_id: None, bucket_name: None, capabilities: ["deleteFiles", "readFiles"], download_url: "https://f001.backblazeb2.com", info_type: "storageApi", name_prefix: None, recommended_part_size: 100000000, s3apiurl: "https://s3.us-west-NNN.backblazeb2.com"}}, authorization_token: "auth_token", application_key_expiration_timestamp: None, bucket_id: "some-bucket-id", bucket_name: "some-bucket-name"}
-    ,
+    ),
   )
 }
