@@ -18,7 +18,7 @@ struct Client {
 fn Client::from_json(
   body : String,
   bucket_id : String,
-  bucket_name : String
+  bucket_name : String,
 ) -> Client raise ClientError {
   let json = @json.parse(body) catch { e => raise ClientError(e.to_string()) }
   //
@@ -32,7 +32,7 @@ fn Client::from_json(
     } => {
       let application_key_expiration_timestamp = match
         application_key_expiration_timestamp {
-        Number(v) => Some(v.to_int())
+        Number(v, ..) => Some(v.to_int())
         _ => None
       }
       let api_info = APIInfo::from_json(api_info)

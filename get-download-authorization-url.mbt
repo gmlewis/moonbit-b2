@@ -7,7 +7,7 @@ pub fn get_download_authorization_url(
   self : Client,
   file_name_prefix : String,
   valid_duration_in_seconds~ : Int = 604800, // maximum = 1 week
-  debug~ : Bool = false
+  debug~ : Bool = false,
 ) -> String raise ClientError {
   let api_url = self.api_info.storage_api.api_url
   if not(api_url.has_prefix("https://")) {
@@ -37,7 +37,7 @@ fn gen_url(
   body : String,
   download_url : String,
   bucket_name : String,
-  file_name_prefix : String
+  file_name_prefix : String,
 ) -> String raise ClientError {
   let json = try? @json.parse(body)
   let json = match json {

@@ -75,11 +75,11 @@ priv struct StorageAPI {
 
 ///|
 fn StorageAPI::from_json(
-  map : Map[String, Json]
+  map : Map[String, Json],
 ) -> StorageAPI raise ClientError {
   match map {
     {
-      "absoluteMinimumPartSize": Number(absolute_minimum_part_size),
+      "absoluteMinimumPartSize": Number(absolute_minimum_part_size, ..),
       "apiUrl": String(api_url),
       "bucketId": bucket_id,
       "bucketName": bucket_name,
@@ -87,7 +87,7 @@ fn StorageAPI::from_json(
       "downloadUrl": String(download_url),
       "infoType": String(info_type),
       "namePrefix": name_prefix,
-      "recommendedPartSize": Number(recommended_part_size),
+      "recommendedPartSize": Number(recommended_part_size, ..),
       "s3ApiUrl": String(s3apiurl),
       ..
     } => {
