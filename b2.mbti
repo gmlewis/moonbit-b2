@@ -8,6 +8,10 @@ import(
 
 // Values
 
+// Errors
+pub(all) suberror ClientError String
+impl Show for ClientError
+
 // Types and methods
 type Client
 fn Client::consume_object(Self, String, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String raise ClientError
@@ -15,9 +19,6 @@ fn Client::get_download_authorization_url(Self, String, valid_duration_in_second
 fn Client::new(String, String, String, String, debug~ : Bool = ..) -> Self raise ClientError
 fn Client::stream_object(Self, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug~ : Bool = ..) -> String raise ClientError
 impl Show for Client
-
-pub(all) suberror ClientError String
-impl Show for ClientError
 
 // Type aliases
 
