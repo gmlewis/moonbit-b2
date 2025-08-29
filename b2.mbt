@@ -12,7 +12,7 @@ pub fn Client::new(
   key_secret : String,
   bucket_id : String,
   bucket_name : String,
-  debug~ : Bool = false,
+  debug? : Bool = false,
 ) -> Client raise ClientError {
   let input = @base64.str2bytes("\{key_id}:\{key_secret}")
   let basic_auth = @base64.std_encode2str(FixedArray::from_iter(input.iter()))

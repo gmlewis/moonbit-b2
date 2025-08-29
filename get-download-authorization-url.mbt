@@ -6,8 +6,8 @@
 pub fn get_download_authorization_url(
   self : Client,
   file_name_prefix : String,
-  valid_duration_in_seconds~ : Int = 604800, // maximum = 1 week
-  debug~ : Bool = false,
+  valid_duration_in_seconds? : Int = 604800, // maximum = 1 week
+  debug? : Bool = false,
 ) -> String raise ClientError {
   let api_url = self.api_info.storage_api.api_url
   if not(api_url.has_prefix("https://")) {
