@@ -10,8 +10,6 @@ import(
 
 // Errors
 pub(all) suberror ClientError String
-fn ClientError::output(Self, &Logger) -> Unit // from trait `Show`
-fn ClientError::to_string(Self) -> String // from trait `Show`
 impl Show for ClientError
 
 // Types and methods
@@ -19,9 +17,7 @@ type Client
 fn Client::consume_object(Self, String, hash~ : &@common.HashFunc?, debug? : Bool) -> String raise ClientError
 fn Client::get_download_authorization_url(Self, String, valid_duration_in_seconds? : Int, debug? : Bool) -> String raise ClientError
 fn Client::new(String, String, String, String, debug? : Bool) -> Self raise ClientError
-fn Client::output(Self, &Logger) -> Unit // from trait `Show`
 fn Client::stream_object(Self, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug? : Bool) -> String raise ClientError
-fn Client::to_string(Self) -> String // from trait `Show`
 impl Show for Client
 
 // Type aliases

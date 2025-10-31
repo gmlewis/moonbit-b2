@@ -2,7 +2,7 @@
 /// `stream_object` performs a GET to retrieve the b2 object, streams it to
 /// its https `response_out`, and optionally returns the object's hash using the
 /// provided HashFunc.
-pub fn stream_object(
+pub fn Client::stream_object(
   self : Client,
   filename : String,
   response_out : @types.ResponseOutparam,

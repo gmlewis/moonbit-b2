@@ -1,7 +1,7 @@
 ///|
 /// `consume_object` performs a GET to retrieve the b2 object, consumes it
 /// and optionally returns the object's hash using the provided HashFunc.
-pub fn consume_object(
+pub fn Client::consume_object(
   self : Client,
   filename : String,
   hash~ : &@common.HashFunc?,

@@ -3,7 +3,7 @@
 /// https GET call to download any files in a bucket with the given `file_name_prefix`.
 /// Note that if `file_name_prefix` needs to be escaped for suitability within a query parameter,
 /// you must do that first before calling this function.
-pub fn get_download_authorization_url(
+pub fn Client::get_download_authorization_url(
   self : Client,
   file_name_prefix : String,
   valid_duration_in_seconds? : Int = 604800, // maximum = 1 week
