@@ -2,7 +2,9 @@
 let api_base_url = "https://api.backblazeb2.com"
 
 ///|
-pub(all) suberror ClientError String derive(Show)
+pub(all) suberror ClientError {
+  ClientError(String)
+} derive(Show)
 
 ///|
 /// `Client::new` returns a new client to communicate with the b2 (Backblaze) API

@@ -9,7 +9,9 @@ import(
 // Values
 
 // Errors
-pub(all) suberror ClientError String
+pub(all) suberror ClientError {
+  ClientError(String)
+}
 pub impl Show for ClientError
 
 // Types and methods
