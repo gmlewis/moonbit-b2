@@ -10,7 +10,7 @@ pub fn Client::stream_object(
   debug? : Bool = false,
 ) -> String raise ClientError {
   let download_url = self.api_info.storage_api.download_url
-  if not(download_url.has_prefix("https://")) {
+  if !download_url.has_prefix("https://") {
     raise ClientError("url '\{download_url}' does not start with https://")
   }
   //
