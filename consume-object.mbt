@@ -22,6 +22,6 @@ pub fn Client::consume_object(
   //
   match @util.consume(req, hash, debug~) {
     Ok((_byte_count, hash)) => hash
-    Err(e) => raise ClientError(e.to_string())
+    Err(e) => raise ClientError(@debug.to_string(e))
   }
 }

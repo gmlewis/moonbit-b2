@@ -5,7 +5,7 @@ priv struct APIInfo {
   // GroupsAPI - not needed - used for the Partner API.
   // See: https://www.backblaze.com/apidocs/b2-authorize-account
   storage_api : StorageAPI // `json:"storageApi"`
-} derive(Show)
+} derive(Debug)
 
 ///|
 fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo raise ClientError {
@@ -14,7 +14,7 @@ fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo raise ClientError {
       let storage_api = StorageAPI::from_json(storage_api)
       { storage_api, }
     }
-    _ => raise ClientError("unable to parse APIInfo: \{map}")
+    _ => raise ClientError("unable to parse APIInfo: \{@debug.to_string(map)}")
   }
 }
 
@@ -71,7 +71,7 @@ priv struct StorageAPI {
   /// EXAMPLE
   /// https://s3.us-west-NNN.backblazeb2.com
   s3apiurl : String // `json:"s3ApiUrl"`
-} derive(Show)
+} derive(Debug)
 
 ///|
 fn StorageAPI::from_json(
@@ -104,11 +104,14 @@ fn StorageAPI::from_json(
         String(v) => Some(v)
         _ => None
       }
-      let capabilities = Array::new(capacity=capabilities_arr.length())
+      let capabilities = Array(capacity=capabilities_arr.length())
       for s in capabilities_arr {
         match s {
           String(s) => capabilities.push(s)
-          s => raise ClientError("unexpected capabilities field: \{s}")
+          s =>
+            raise ClientError(
+              "unexpected capabilities field: \{@debug.to_string(s)}",
+            )
         }
       }
       let recommended_part_size = recommended_part_size.to_int()
@@ -125,7 +128,8 @@ fn StorageAPI::from_json(
         s3apiurl,
       }
     }
-    _ => raise ClientError("unable to parse StorageAPI: \{map}")
+    _ =>
+      raise ClientError("unable to parse StorageAPI: \{@debug.to_string(map)}")
   }
 }
 

@@ -4,7 +4,7 @@ let api_base_url = "https://api.backblazeb2.com"
 ///|
 pub(all) suberror ClientError {
   ClientError(String)
-} derive(Show)
+} derive(Debug)
 
 ///|
 /// `Client::new` returns a new client to communicate with the b2 (Backblaze) API
@@ -26,7 +26,10 @@ pub fn Client::new(
   let req = @util.new_request(@types.Get, url, fields~)
   let body = match @util.send_request(req) {
     Ok(body) => @base64.bytes2str(body)
-    Err(e) => raise ClientError("request failed with error code: \{e}")
+    Err(e) =>
+      raise ClientError(
+        "request failed with error code: \{@debug.to_string(e)}",
+      )
   }
   if debug {
     @log.info("b2.Client::new: body=\{body}")

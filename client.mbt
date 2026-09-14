@@ -12,7 +12,7 @@ struct Client {
   /// This client is used to interact with this bucket.
   bucket_id : String
   bucket_name : String
-} derive(Show)
+} derive(Debug)
 
 ///|
 fn Client::from_json(
@@ -45,7 +45,7 @@ fn Client::from_json(
         bucket_name,
       }
     }
-    _ => raise ClientError("unable to parse Client: \{json}")
+    _ => raise ClientError("unable to parse Client: \{@debug.to_string(json)}")
   }
 }
 
@@ -62,13 +62,20 @@ test "Client::from_json - invalid apiInfo structure" {
     let client = Client::from_json(
       invalid_apiInfo_json, "some-bucket-id", "some-bucket-name",
     )
-    raise ClientError("expected failure, but got: \{client}")
+    raise ClientError("expected failure, but got: \{@debug.to_string(client)}")
   } catch {
     ClientError(e) =>
       assert_eq(
         e,
         (
-          #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": String("invalidApiInfo"), "authorizationToken": String("auth_token"), "applicationKeyExpirationTimestamp": Number(1672531200)})
+          #|unable to parse Client: Object(
+          #|  {
+          #|    "accountId": String("12345"),
+          #|    "apiInfo": String("invalidApiInfo"),
+          #|    "authorizationToken": String("auth_token"),
+          #|    "applicationKeyExpirationTimestamp": Number(1672531200),
+          #|  },
+          #|)
         ),
       )
   }
@@ -91,13 +98,28 @@ test "Client::from_json - partial valid JSON input" {
     let client = Client::from_json(
       partial_valid_json, "some-bucket-id", "some-bucket-name",
     )
-    raise ClientError("expected failure, but got: \{client}")
+    raise ClientError("expected failure, but got: \{@debug.to_string(client)}")
   } catch {
     ClientError(e) =>
       assert_eq(
         e,
         (
-          #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({"storageApi": Object({"absoluteMinimumPartSize": Number(5000000), "apiUrl": String("https://apiNNN.backblazeb2.com")})}), "authorizationToken": String("auth_token")})
+          #|unable to parse Client: Object(
+          #|  {
+          #|    "accountId": String("12345"),
+          #|    "apiInfo": Object(
+          #|      {
+          #|        "storageApi": Object(
+          #|          {
+          #|            "absoluteMinimumPartSize": Number(5000000),
+          #|            "apiUrl": String("https://apiNNN.backblazeb2.com"),
+          #|          },
+          #|        ),
+          #|      },
+          #|    ),
+          #|    "authorizationToken": String("auth_token"),
+          #|  },
+          #|)
         ),
       )
   }
@@ -114,13 +136,18 @@ test "Client::from_json - random JSON input" {
     let client = Client::from_json(
       random_json, "some-bucket-id", "some-bucket-name",
     )
-    raise ClientError("expected failure, but got: \{client}")
+    raise ClientError("expected failure, but got: \{@debug.to_string(client)}")
   } catch {
     ClientError(e) =>
       assert_eq(
         e,
         (
-          #|unable to parse Client: Object({"randomField": String("randomValue"), "anotherRandomField": Number(12345)})
+          #|unable to parse Client: Object(
+          #|  {
+          #|    "randomField": String("randomValue"),
+          #|    "anotherRandomField": Number(12345),
+          #|  },
+          #|)
         ),
       )
   }
@@ -133,7 +160,7 @@ test "Client::from_json - empty JSON input" {
     let client = Client::from_json(
       empty_json, "some-bucket-id", "some-bucket-name",
     )
-    raise ClientError("expected failure, but got: \{client}")
+    raise ClientError("expected failure, but got: \{@debug.to_string(client)}")
   } catch {
     ClientError(e) =>
       assert_eq(
@@ -157,13 +184,19 @@ test "Client::from_json - missing required fields" {
     let client = Client::from_json(
       missing_fields_json, "some-bucket-id", "some-bucket-name",
     )
-    raise ClientError("expected failure, but got: \{client}")
+    raise ClientError("expected failure, but got: \{@debug.to_string(client)}")
   } catch {
     ClientError(e) =>
       assert_eq(
         e,
         (
-          #|unable to parse Client: Object({"accountId": String("12345"), "apiInfo": Object({}), "authorizationToken": String("auth_token")})
+          #|unable to parse Client: Object(
+          #|  {
+          #|    "accountId": String("12345"),
+          #|    "apiInfo": Object({}),
+          #|    "authorizationToken": String("auth_token"),
+          #|  },
+          #|)
         ),
       )
   }
@@ -176,7 +209,7 @@ test "Client::from_json - invalid JSON input" {
     let client = Client::from_json(
       invalid_json, "some-bucket-id", "some-bucket-name",
     )
-    raise ClientError("expected failure, but got: \{client}")
+    raise ClientError("expected failure, but got: \{@debug.to_string(client)}")
   } catch {
     ClientError(e) => assert_eq(e, "Invalid character 'i' at line 1, column 0")
   }
@@ -204,10 +237,30 @@ test "Client::from_json - valid JSON input with nulls" {
     #|  "authorizationToken": "auth_token",
     #|  "applicationKeyExpirationTimestamp": null
     #|}
-  inspect(
+  @debug.debug_inspect(
     Client::from_json(valid_json, "some-bucket-id", "some-bucket-name"),
     content=(
-      #|{account_id: "12345", api_info: {storage_api: {absolute_minimum_part_size: 5000000, api_url: "https://apiNNN.backblazeb2.com", bucket_id: None, bucket_name: None, capabilities: ["deleteFiles", "readFiles"], download_url: "https://f001.backblazeb2.com", info_type: "storageApi", name_prefix: None, recommended_part_size: 100000000, s3apiurl: "https://s3.us-west-NNN.backblazeb2.com"}}, authorization_token: "auth_token", application_key_expiration_timestamp: None, bucket_id: "some-bucket-id", bucket_name: "some-bucket-name"}
+      #|{
+      #|  account_id: "12345",
+      #|  api_info: {
+      #|    storage_api: {
+      #|      absolute_minimum_part_size: 5000000,
+      #|      api_url: "https://apiNNN.backblazeb2.com",
+      #|      bucket_id: None,
+      #|      bucket_name: None,
+      #|      capabilities: ["deleteFiles", "readFiles"],
+      #|      download_url: "https://f001.backblazeb2.com",
+      #|      info_type: "storageApi",
+      #|      name_prefix: None,
+      #|      recommended_part_size: 100000000,
+      #|      s3apiurl: "https://s3.us-west-NNN.backblazeb2.com",
+      #|    },
+      #|  },
+      #|  authorization_token: "auth_token",
+      #|  application_key_expiration_timestamp: None,
+      #|  bucket_id: "some-bucket-id",
+      #|  bucket_name: "some-bucket-name",
+      #|}
     ),
   )
 }

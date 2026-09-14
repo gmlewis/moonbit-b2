@@ -24,6 +24,6 @@ pub fn Client::stream_object(
   //
   match @util.stream(req, response_out, hash, debug~) {
     Ok((_byte_count, hash)) => hash
-    Err(e) => raise ClientError(e.to_string())
+    Err(e) => raise ClientError(@debug.to_string(e))
   }
 }

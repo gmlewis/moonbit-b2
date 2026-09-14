@@ -5,5 +5,6 @@ import {
   "gmlewis/spin-moonbit-sdk/log",
   "gmlewis/spin-moonbit-sdk/util",
   "moonbitlang/core/builtin",
+  "moonbitlang/core/debug",
   "moonbitlang/core/json",
 }

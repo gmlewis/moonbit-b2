@@ -27,7 +27,7 @@ pub fn Client::get_download_authorization_url(
   let req = @util.new_request(@types.Get, url, fields~)
   let body = match @util.send_request(req, debug~) {
     Ok(body) => @base64.bytes2str(body)
-    Err(e) => raise ClientError(e.to_string())
+    Err(e) => raise ClientError(@debug.to_string(e))
   }
   gen_url(body, download_url, self.bucket_name, file_name_prefix)
 }
@@ -39,11 +39,7 @@ fn gen_url(
   bucket_name : String,
   file_name_prefix : String,
 ) -> String raise ClientError {
-  let json = try? @json.parse(body)
-  let json = match json {
-    Ok(json) => json
-    Err(e) => raise ClientError(e.to_string())
-  }
+  let json = @json.parse(body) catch { e => raise ClientError(e.to_string()) }
   let authorization_token = match json {
     Object({ "authorizationToken": String(token), .. }) => token
     _ => raise ClientError("missing authorizationToken in response: \{body}")
