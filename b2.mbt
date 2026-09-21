@@ -7,6 +7,11 @@ pub(all) suberror ClientError {
 } derive(Debug)
 
 ///|
+/// `to_repr` is promoted explicitly because `derive(Debug)` promotes it
+/// implicitly, which is deprecated.
+pub extend ClientError with @debug.Debug::{to_repr}
+
+///|
 /// `Client::new` returns a new client to communicate with the b2 (Backblaze) API
 /// for the provided `bucket_id` and `bucket_name`.
 pub fn Client::new(

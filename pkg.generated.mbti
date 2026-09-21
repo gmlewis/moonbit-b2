@@ -13,6 +13,7 @@ import {
 pub(all) suberror ClientError {
   ClientError(String)
 } derive(@debug.Debug)
+pub fn ClientError::to_repr(Self) -> @debug.Repr
 
 // Types and methods
 type Client derive(@debug.Debug)
@@ -20,6 +21,7 @@ pub fn Client::consume_object(Self, String, hash~ : &@common.HashFunc?, debug? :
 pub fn Client::get_download_authorization_url(Self, String, valid_duration_in_seconds? : Int, debug? : Bool) -> String raise ClientError
 pub fn Client::new(String, String, String, String, debug? : Bool) -> Self raise ClientError
 pub fn Client::stream_object(Self, String, @types.ResponseOutparam, hash~ : &@common.HashFunc?, debug? : Bool) -> String raise ClientError
+pub fn Client::to_repr(Self) -> @debug.Repr
 
 // Type aliases
 

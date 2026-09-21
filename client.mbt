@@ -15,6 +15,11 @@ struct Client {
 } derive(Debug)
 
 ///|
+/// `to_repr` is promoted explicitly because `derive(Debug)` promotes it
+/// implicitly, which is deprecated.
+pub extend Client with @debug.Debug::{to_repr}
+
+///|
 fn Client::from_json(
   body : String,
   bucket_id : String,
