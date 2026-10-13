@@ -8,7 +8,7 @@ struct Client {
   /// An authorization token to use with all calls, other than b2_authorize_account, that need an Authorization header. This authorization token is valid for at most 24 hours.
   authorization_token : String // `json:"authorizationToken"`
   /// Expiration timestamp for the application key.
-  application_key_expiration_timestamp : Int? // `json:"applicationKeyExpirationTimestamp,omitempty"`
+  application_key_expiration_timestamp : Int32? // `json:"applicationKeyExpirationTimestamp,omitempty"`
   /// This client is used to interact with this bucket.
   bucket_id : String
   bucket_name : String

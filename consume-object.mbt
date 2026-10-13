@@ -5,7 +5,7 @@ pub fn Client::consume_object(
   self : Client,
   filename : String,
   hash~ : &@common.HashFunc?,
-  debug? : Bool = false,
+  debug~ : Bool = false,
 ) -> String raise ClientError {
   let download_url = self.api_info.storage_api.download_url
   if !download_url.has_prefix("https://") {

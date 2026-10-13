@@ -25,7 +25,7 @@ priv struct StorageAPI {
   ///
   /// EXAMPLE
   /// 5000000
-  absolute_minimum_part_size : Int // `json:"absoluteMinimumPartSize"`
+  absolute_minimum_part_size : Int32 // `json:"absoluteMinimumPartSize"`
   /// The base URL to use for all API calls except for uploading and downloading files.
   ///
   /// EXAMPLE
@@ -65,7 +65,7 @@ priv struct StorageAPI {
   ///
   /// EXAMPLE
   /// 100000000
-  recommended_part_size : Int // `json:"recommendedPartSize"`
+  recommended_part_size : Int32 // `json:"recommendedPartSize"`
   /// The base URL to use for all API calls using the S3 compatible API.
   ///
   /// EXAMPLE

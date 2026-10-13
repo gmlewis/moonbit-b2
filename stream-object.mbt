@@ -7,7 +7,7 @@ pub fn Client::stream_object(
   filename : String,
   response_out : @types.ResponseOutparam,
   hash~ : &@common.HashFunc?,
-  debug? : Bool = false,
+  debug~ : Bool = false,
 ) -> String raise ClientError {
   let download_url = self.api_info.storage_api.download_url
   if !download_url.has_prefix("https://") {
