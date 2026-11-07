@@ -1,11 +1,12 @@
 ///|
 /// `APIInfo` represents Backblaze B2 Native API info.
 /// It is a data structure that groups the information you need by API suite.
+#derive(Debug)
 priv struct APIInfo {
   // GroupsAPI - not needed - used for the Partner API.
   // See: https://www.backblaze.com/apidocs/b2-authorize-account
   storage_api : StorageAPI // `json:"storageApi"`
-} derive(Debug)
+}
 
 ///|
 fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo raise ClientError {
@@ -20,6 +21,7 @@ fn APIInfo::from_json(map : Map[String, Json]) -> APIInfo raise ClientError {
 
 ///|
 /// `StorageAPI` represents Backblaze B2 Native Storage API info.
+#derive(Debug)
 priv struct StorageAPI {
   /// The smallest possible size of a part of a large file (except the last one). This is smaller than the recommendedPartSize. If you use it, you may find that it takes longer overall to upload a large file.
   ///
@@ -71,7 +73,7 @@ priv struct StorageAPI {
   /// EXAMPLE
   /// https://s3.us-west-NNN.backblazeb2.com
   s3apiurl : String // `json:"s3ApiUrl"`
-} derive(Debug)
+}
 
 ///|
 fn StorageAPI::from_json(

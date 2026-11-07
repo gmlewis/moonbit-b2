@@ -1,5 +1,6 @@
 ///|
 /// `Client` represents an authorized b2 client.
+#derive(Debug)
 struct Client {
   /// The identifier for the account.
   account_id : String // `json:"accountId"`
@@ -12,7 +13,7 @@ struct Client {
   /// This client is used to interact with this bucket.
   bucket_id : String
   bucket_name : String
-} derive(Debug)
+}
 
 ///|
 /// `to_repr` is promoted explicitly because `derive(Debug)` promotes it

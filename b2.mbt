@@ -2,9 +2,10 @@
 let api_base_url = "https://api.backblazeb2.com"
 
 ///|
+#derive(Debug)
 pub(all) suberror ClientError {
   ClientError(String)
-} derive(Debug)
+}
 
 ///|
 /// `to_repr` is promoted explicitly because `derive(Debug)` promotes it
