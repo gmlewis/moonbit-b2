@@ -1,10 +1,10 @@
 name = "gmlewis/b2"
 
-version = "0.35.4"
+version = "0.35.5"
 
 import {
-  "gmlewis/base64@0.16.14",
-  "gmlewis/spin-moonbit-sdk@0.55.5",
+  "gmlewis/base64@0.16.15",
+  "gmlewis/spin-moonbit-sdk@0.55.6",
 }
 
 readme = "README.md"
